@@ -5,6 +5,9 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     @members = Member.all
+
+    # ask shopify to render like native liquid page
+    render content_type: 'application/liquid'
   end
 
   # GET /members/1
@@ -15,10 +18,15 @@ class MembersController < ApplicationController
   # GET /members/new
   def new
     @member = Member.new
+
+    # ask shopify to render like native liquid page
+   render content_type: 'application/liquid'
   end
 
   # GET /members/1/edit
   def edit
+    # ask shopify to render like native liquid page
+    render content_type: 'application/liquid'
   end
 
   # POST /members
@@ -35,6 +43,9 @@ class MembersController < ApplicationController
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
+
+    # ask shopify to render like native liquid page
+    render content_type: 'application/liquid'
   end
 
   # PATCH/PUT /members/1
@@ -49,6 +60,9 @@ class MembersController < ApplicationController
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
+
+    # ask shopify to render like native liquid page
+    render content_type: 'application/liquid'
   end
 
   # DELETE /members/1
@@ -59,6 +73,9 @@ class MembersController < ApplicationController
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
       format.json { head :no_content }
     end
+
+    # ask shopify to render like native liquid page
+    render content_type: 'application/liquid'
   end
 
   private
