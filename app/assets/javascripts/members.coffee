@@ -5,12 +5,14 @@
 
 
 @getMemberEmail = ()->
+  console.log "came in getemail"
 
   # frameSrc = window.frameElement.src
   # console.log(frameSrc)
 
   iframeSrc = $('#profile_frame').attr('src')
-  console.log(iframeSrc)
+  console.log iframeSrc
 
+  console.log "came after getemail"
 
 $(document).ready(@getMemberEmail)
