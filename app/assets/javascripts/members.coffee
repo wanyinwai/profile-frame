@@ -9,6 +9,8 @@
 
   # frameSrc = window.frameElement.src
   # console.log(frameSrc)
+  iframeURL = location.href
+  console.log iframeURL
 
   iframeSrc = $('#profile_frame').attr('src')
   console.log iframeSrc
