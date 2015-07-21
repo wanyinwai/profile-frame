@@ -14,7 +14,17 @@
   # console.log customer_id
 
   iframeURL = location.href
+
+  formattedStr = iframeURL.split('?', 2)
+  paramStr = formattedStr[1].split('&', 2)
+  customer_email = paramStr[0].substring(paramStr[0].indexOf('=') + 1)
+  customer_id = paramStr[1].substring(paramStr[1].indexOf('=') + 1)
+
   console.log iframeURL
+  console.log formattedStr
+  console.log paramStr
+  console.log customer_email
+  console.log customer_id
 
   console.log "came after getemail"
 
