@@ -7,8 +7,8 @@
 @getMemberEmail = ()->
   console.log "came in getemail"
 
-  customer_email = document.getElementById('profile_frame').getAttribute('customer_email')
-  customer_id = document.getElementById('profile_frame').getAttribute('customer_id')
+  customer_email = parent.document.getElementById('profile_frame').getAttribute('customer_email')
+  customer_id = parent.document.getElementById('profile_frame').getAttribute('customer_id')
 
   console.log customer_email
   console.log customer_id
