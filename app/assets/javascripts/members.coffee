@@ -7,16 +7,11 @@
 @getMemberEmail = ()->
   console.log "came in getemail"
 
-  # frameSrc = window.frameElement.src
-  # console.log(frameSrc)
-  x = document.getElementsByTagName('iframe').getAttribute('memberid')
-  console.log x
+  customer_email = document.getElementById('profile_frame').getAttribute('customer_email')
+  customer_id = document.getElementById('profile_frame').getAttribute('customer_id')
 
-  iframeURL = location.href
-  console.log iframeURL
-
-  iframeSrc = $('#profile_frame').attr('src')
-  console.log iframeSrc
+  console.log customer_email
+  console.log customer_id
 
   console.log "came after getemail"
 
