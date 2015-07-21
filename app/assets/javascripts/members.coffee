@@ -6,8 +6,8 @@
 
 @getMemberEmail = ()->
 
-  frameSrc = window.frameElement.src
-  console.log(frameSrc)
+  # frameSrc = window.frameElement.src
+  # console.log(frameSrc)
 
   iframeSrc = $('#profile_frame').attr('src')
   console.log(iframeSrc)
