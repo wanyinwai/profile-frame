@@ -9,6 +9,9 @@
 
   # frameSrc = window.frameElement.src
   # console.log(frameSrc)
+  x = document.getElementsByTagName('profile_frame').getAttribute('memberid')
+  console.log x
+
   iframeURL = location.href
   console.log iframeURL
 
