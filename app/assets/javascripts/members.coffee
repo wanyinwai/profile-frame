@@ -1,20 +1,11 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-@passMemberEmail = () ->
-  console.log 'came in passemail'
-
-
 
 @getMemberEmail = () ->
   console.log 'came in getemail'
 
-  #customer_email = parent.document.getElementById('profile_frame').getAttribute('customer_email')
-  #customer_id = parent.document.getElementById('profile_frame').getAttribute('customer_id')
-
-  # console.log customer_email
-  # console.log customer_id
-
+  # get iframe url
   iframeURL = location.href
 
   formattedStr = iframeURL.split('?', 2)
@@ -26,9 +17,24 @@
   console.log 'formatted ' + formattedStr
   console.log 'paramStr ' + paramStr
   console.log 'email ' + customer_email
-  console.log 'id' + customer_id
+  console.log 'id ' + customer_id
 
-  @passMemberEmail
+  $.ajax
+    url: 'http://profile-frame.herokuapp.com/memberinfo'
+    type: 'POST'
+    data: 'customer_email='+customer_email+'&customer_id='+customer_id
+    headers: {
+        'X-Transaction': 'POST memberinfo',
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+    success: (data) ->
+      console.log "Successfully passed data in ajax."
+      console.log data['member_email_result']
+      return
+    error: (e) ->
+      console.log "Ajax thrown an error."
+      return
+
 
   console.log 'came after getemail'
 

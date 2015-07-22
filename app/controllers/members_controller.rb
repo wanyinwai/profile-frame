@@ -1,5 +1,16 @@
 class MembersController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_action :set_member, only: [:show, :edit, :update, :destroy]
+
+  # get user info from ajax
+  def memberinfo
+    puts "reached userinfo"
+    puts params[:customer_email]
+    puts params[:customer_id]
+
+    # return QRimage to json to render to view
+    render :json => {'member_email_result' => 'success'}
+  end
 
   # GET /members
   # GET /members.json
