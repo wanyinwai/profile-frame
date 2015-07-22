@@ -29,7 +29,7 @@
     }
     success: (data) ->
       console.log "Successfully passed data in ajax."
-      console.log data['member_email_result']
+      # console.log data['member_email_result']
       return
     error: (e) ->
       console.log "Ajax thrown an error."

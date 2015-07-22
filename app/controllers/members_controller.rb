@@ -8,14 +8,26 @@ class MembersController < ApplicationController
     puts params[:customer_email]
     puts params[:customer_id]
 
-    # return QRimage to json to render to view
-    render :json => {'member_email_result' => 'success'}
+    #render :json => {'member_email_result' => 'success'}
+
+    #@user = User.create( :email => params[:email], :password => params[:password])
+    if Member.exists?(:member_id => params[:customer_id])
+      @members = Member.find_by(:member_id =>params[:customer_id])
+      render action => "index"
+
+    else
+      @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
+      @members = Member.find_by(:member_id =>params[:customer_id])
+
+      render action: "index"
+    #redirect_to :action => "index", :customer_email => params[:customer_email], :customer_id => params[:customer_id]
+    end
   end
 
   # GET /members
   # GET /members.json
   def index
-    @members = Member.all
+    #@members = Member.all
   end
 
   # GET /members/1
@@ -30,6 +42,7 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
+    redirect_to :action => "index"
   end
 
   # POST /members
