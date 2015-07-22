@@ -4,7 +4,7 @@ class MembersController < ApplicationController
 
   # get user info from ajax
   def memberinfo
-    puts "reached userinfo"
+    puts "reached memberinfo"
     puts params[:customer_email]
     puts params[:customer_id]
 
@@ -80,6 +80,6 @@ class MembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(:member_id, :email, :bday, :occupation)
+      params.require(:member).permit(:member_id, :email, :bday, :occupation, :profilepic)
     end
 end

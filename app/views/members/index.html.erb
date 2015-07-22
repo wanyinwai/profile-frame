@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>ProfilePicture</th>
       <th>Member</th>
       <th>Email</th>
       <th>Bday</th>
@@ -16,6 +17,7 @@
   <tbody>
     <% @members.each do |member| %>
       <tr>
+        <td><%= image_tag member.profilepic.url(:medium) %></td>
         <td><%= member.member_id %></td>
         <td><%= member.email %></td>
         <td><%= member.bday %></td>
