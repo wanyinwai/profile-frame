@@ -15,7 +15,7 @@ class MembersController < ApplicationController
       puts "came in exist"
       @members = Member.find_by(:member_id =>params[:customer_id])
       puts "after find"
-      render action: "index"
+      #render action: "index"
 
     else
       puts "came in not exist"
