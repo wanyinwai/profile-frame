@@ -14,7 +14,7 @@ class MembersController < ApplicationController
     if Member.exists?(:member_id => params[:customer_id])
       puts "came in exist"
       @members = Member.find_by(:member_id =>params[:customer_id])
-      puts "#{@members}"      
+      puts "after find"
       render action: "index"
 
     else
