@@ -9,24 +9,26 @@ class MembersController < ApplicationController
     puts params[:customer_id]
 
     #render :json => {'member_email_result' => 'success'}
+    if params[:customer_email].present?
+      if Member.exists?(:member_id => params[:customer_id])
+        puts "came in exist"
+        @members = Member.find_by(:member_id =>params[:customer_id])
+        puts "after find"
+        #render action: "index"
 
-    #@user = User.create( :email => params[:email], :password => params[:password])
-    if Member.exists?(:member_id => params[:customer_id])
-      puts "came in exist"
-      @members = Member.find_by(:member_id =>params[:customer_id])
-      puts "after find"
-      #render action: "index"
+      else
+        puts "came in not exist"
+        @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
+        @members = Member.find_by(:member_id =>params[:customer_id])
 
-    else
-      puts "came in not exist"
-      @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
-      @members = Member.find_by(:member_id =>params[:customer_id])
-
-      render action: "index"
-    #redirect_to :action => "index", :customer_email => params[:customer_email], :customer_id => params[:customer_id]
+        #render action: "index"
+      #redirect_to :action => "index", :customer_email => params[:customer_email], :customer_id => params[:customer_id]
+      end
+      
+      puts "after member exist if else"
     end
 
-    puts "after if else"
+    puts "after param exist if else"
   end
 
   # GET /members
