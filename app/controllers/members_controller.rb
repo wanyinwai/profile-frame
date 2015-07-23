@@ -34,6 +34,7 @@ class MembersController < ApplicationController
   def index
     puts "come in index"
     @members = Member.all
+    puts "come out from index"
   end
 
   # GET /members/1
