@@ -47,7 +47,7 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
-    redirect_to :action => "index"
+  
   end
 
   # POST /members
