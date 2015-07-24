@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  @@customer_id = ""
+  @temp_customer_id = ""
 
   # get member info from ajax
   def memberinfo
@@ -16,7 +16,7 @@ class MembersController < ApplicationController
         # if member already been created, just redirect to index and render him out
         puts "came in exist"
 
-        @@customer_id = params[:customer_id]
+        @temp_customer_id = params[:customer_id]
 
         redirect_to :action => "index", :customer_id => params[:customer_id] and return
       else
@@ -24,7 +24,7 @@ class MembersController < ApplicationController
         puts "came in not exist"
         @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
-        @@customer_id = params[:customer_id]
+        @temp_customer_id = params[:customer_id]
 
         redirect_to :action => "index", :customer_id => params[:customer_id] and return
       end
@@ -41,17 +41,16 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     puts "come in index"
-    puts @@customer_id
+    puts @temp_customer_id
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
     if customer_id.blank?
 
-      @members = Member.where(:member_id => @@customer_id)
+      @members = Member.where(:member_id => @temp_customer_id)
       # potential hint here, when customer id is blank, cannot show anything
       puts "*****come in blank"
       #@members = Member.all
 
-      @@customer_id = ""
     else
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
