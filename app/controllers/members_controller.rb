@@ -8,13 +8,14 @@ class MembersController < ApplicationController
     puts params[:customer_email]
     puts params[:customer_id]
 
-
     if params[:customer_email].present?
       if Member.exists?(:member_id => params[:customer_id])
         puts "came in exist"
         @members = Member.find_by(:member_id =>params[:customer_id])
         puts "after find"
         #render action: "index"
+
+        redirect_to :action => "index", :customer_id => params[:customer_id]
       else
         puts "came in not exist"
         @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
@@ -36,7 +37,14 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     puts "come in index"
-    @members = Member.all
+
+    customer_id = params[:customer_id]
+    if customer_id.blank?
+      @members = Member.all
+    else
+      @members = Member.find_by(:member_id =>params[:customer_id])
+    end
+    
     puts "come out from index"
   end
 
