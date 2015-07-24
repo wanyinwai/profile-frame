@@ -1,8 +1,11 @@
 class MembersController < ApplicationController
+  # skip_before_filter is to escape authenticity_token check for ajax call
   skip_before_filter :verify_authenticity_token
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  # get user info from ajax
+  @@customer_id = ""
+
+  # get member info from ajax
   def memberinfo
     puts "reached memberinfo"
     puts params[:customer_email]
@@ -10,12 +13,18 @@ class MembersController < ApplicationController
 
     if params[:customer_email].present?
       if Member.exists?(:member_id => params[:customer_id])
+        # if member already been created, just redirect to index and render him out
         puts "came in exist"
+
+        @@customer_id = params[:customer_id]
 
         redirect_to :action => "index", :customer_id => params[:customer_id] and return
       else
+        # create member automatically when he logs in, insert 2 params first
         puts "came in not exist"
         @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
+
+        @@customer_id = params[:customer_id]
 
         redirect_to :action => "index", :customer_id => params[:customer_id] and return
       end
@@ -24,6 +33,7 @@ class MembersController < ApplicationController
     end
 
     puts "after param exist if else"
+    # render json reponse to ajax
     render :json => {'member_email_result' => 'success'}
   end
 
@@ -31,7 +41,8 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     puts "come in index"
-
+    puts @@customer_id
+    # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
     if customer_id.blank?
       # potential hint here, when customer id is blank, cannot show anything
@@ -40,7 +51,7 @@ class MembersController < ApplicationController
     else
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
-      #@member = Member.find_by(:member_id =>params[:customer_id])
+
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
         puts "member in blank"
