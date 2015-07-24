@@ -50,6 +50,8 @@ class MembersController < ApplicationController
       # potential hint here, when customer id is blank, cannot show anything
       puts "*****come in blank"
       #@members = Member.all
+
+      @@customer_id = ""
     else
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
