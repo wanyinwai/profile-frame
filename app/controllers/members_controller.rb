@@ -11,13 +11,13 @@ class MembersController < ApplicationController
     if params[:customer_email].present?
       if Member.exists?(:member_id => params[:customer_id])
         puts "came in exist"
-        
-        return redirect_to :action => "index", :customer_id => params[:customer_id]
+
+        redirect_to :action => "index", :customer_id => params[:customer_id] and return
       else
         puts "came in not exist"
         @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
-        redirect_to :action => "index", :customer_id => params[:customer_id]
+        redirect_to :action => "index", :customer_id => params[:customer_id] and return
       end
 
       puts "after member exist if else"
