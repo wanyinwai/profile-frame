@@ -47,14 +47,13 @@ class MembersController < ApplicationController
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
       #@member = Member.find_by(:member_id =>params[:customer_id])
-      @member = Member.where(:member_id => params[:customer_id])
-      if @member.blank?
+      @members = Member.where(:member_id => params[:customer_id])
+      if @members.blank?
         puts "member in blank"
         @members = Member.all
-      else
-        puts "member not blank"
-        @members = @member
       end
+
+      puts "member not blank"  
     end
 
     puts "come out from index"
