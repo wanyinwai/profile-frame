@@ -11,7 +11,7 @@ class MembersController < ApplicationController
     if params[:customer_email].present?
       if Member.exists?(:member_id => params[:customer_id])
         puts "came in exist"
-        @members = Member.find_by(:member_id =>params[:customer_id])
+        @members = Member.find_by(:member_id => params[:customer_id])
         puts "after find"
         #render action: "index"
 
@@ -43,6 +43,7 @@ class MembersController < ApplicationController
       puts "*****come in blank"
       @members = Member.all
     else
+      puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
       @members = Member.find_by(:member_id =>params[:customer_id])
     end
