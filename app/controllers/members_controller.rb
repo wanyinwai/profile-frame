@@ -40,12 +40,14 @@ class MembersController < ApplicationController
 
     customer_id = params[:customer_id]
     if customer_id.blank?
+      # potential hint here, when customer id is blank, cannot show anything
       puts "*****come in blank"
       @members = Member.all
     else
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
-      @member = Member.find_by(:member_id =>params[:customer_id])
+      #@member = Member.find_by(:member_id =>params[:customer_id])
+      @member = Member.where(:member_id => params[:customer_id])
       if @member.blank?
         puts "member in blank"
         @members = Member.all
@@ -61,6 +63,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
+    redirect_to :action => "index"
   end
 
   # GET /members/new
@@ -70,7 +73,6 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
-
   end
 
   # POST /members
