@@ -45,12 +45,12 @@ class MembersController < ApplicationController
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
     if customer_id.blank?
-
+      puts "*****come in blank"
       @members = Member.where(:member_id => session[:current_member_id])
       # potential hint here, when customer id is blank, cannot show anything
-      puts "*****come in blank"
-      #@members = Member.all
 
+
+      #@members = Member.all
     else
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
