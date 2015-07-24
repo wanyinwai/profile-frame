@@ -41,7 +41,7 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     puts "come in index"
-    puts session[:current_member_id]
+    puts "session #{session[:current_member_id]}"
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
     if customer_id.blank?
