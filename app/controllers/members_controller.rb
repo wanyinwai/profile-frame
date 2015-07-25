@@ -42,11 +42,17 @@ class MembersController < ApplicationController
   def index
     puts "come in index"
     puts "session #{session[:current_member_id]}"
+
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
+    puts "customer_id #{customer_id}"
+
     if customer_id.blank?
       puts "*****come in blank"
-      @members = Member.where(:member_id => session[:current_member_id])
+
+      render :template => "members/login"
+
+      #@members = Member.where(:member_id => session[:current_member_id])
       # potential hint here, when customer id is blank, cannot show anything
 
 
@@ -58,7 +64,7 @@ class MembersController < ApplicationController
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
         puts "member in blank"
-        @members = Member.all
+        #@members = Member.all
       end
 
       puts "member not blank"

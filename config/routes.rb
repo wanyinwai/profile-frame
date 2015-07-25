@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   # ajax post
   post '/memberinfo' => 'members#memberinfo'
 
+  # not log in display
+  get '/login' => 'members#login'
+
   # You can have the root of your site routed with "root"
   root 'members#index'
 
