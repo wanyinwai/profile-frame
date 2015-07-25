@@ -50,8 +50,10 @@ class MembersController < ApplicationController
     if customer_id.blank?
       puts "*****come in blank"
       if session[:current_member_id].blank?
+        puts "session empty"
         render :template => "members/login"
       else
+        puts "session not empty"
         @members = Member.where(:member_id => session[:current_member_id])
       end
     else
