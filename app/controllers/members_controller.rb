@@ -49,14 +49,11 @@ class MembersController < ApplicationController
 
     if customer_id.blank?
       puts "*****come in blank"
-
-      render :template => "members/login"
-
-      #@members = Member.where(:member_id => session[:current_member_id])
-      # potential hint here, when customer id is blank, cannot show anything
-
-
-      #@members = Member.all
+      if session[:current_member_id].blank?
+        render :template => "members/login"
+      else
+        @members = Member.where(:member_id => session[:current_member_id])
+      end
     else
       puts "&&&&& #{customer_id}"
       puts "&&&&&come in not blank"
