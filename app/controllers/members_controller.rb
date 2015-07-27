@@ -22,7 +22,7 @@ class MembersController < ApplicationController
           # create member automatically when he logs in, insert 2 params first
           puts "in member not exist"
 
-          @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
+          #@member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
           session[:current_member_id] = params[:customer_id]
 
@@ -82,7 +82,7 @@ class MembersController < ApplicationController
       # user first log in
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
-        puts "members object not found"
+        redirect_to :action => "new"
       end
     end
     # if customer_id.blank?
