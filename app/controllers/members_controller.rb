@@ -54,13 +54,16 @@ class MembersController < ApplicationController
     # debug - if customer_id.blank && not from edit, empty session
     if customer_id.blank?
       puts "customer_id empty"
-      # if session empty means there's no input from ajax | user not login
-      if session[:current_member_id].blank?
-        puts "session empty"
-        # user not log in so render ask user login page
+      if actionOrigin.blank?
         render :template => "members/login"
+        # # if session empty means there's no input from ajax | user not login
+        # if session[:current_member_id].blank?
+        #   puts "session empty"
+        #   # user not log in so render ask user login page
+        #   render :template => "members/login"
       else
         puts "session exist"
+        puts "action origin = #{actionOrigin}"
         # session not empty means input from ajax | user is logged in
         # if user logged in, get session of the user and load his details
         # session not empty is also used when user navigate back from other action
