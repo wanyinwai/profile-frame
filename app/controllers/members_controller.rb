@@ -31,10 +31,11 @@ class MembersController < ApplicationController
       end
       @@ajaxRendered = true
       # render json reponse to ajax
-      render :json => {'member_email_result' => 'success'}
+
     else
       puts "ajax already rendered"
     end
+    render :json => {'member_email_result' => 'success'}
   end
 
   # GET /members
