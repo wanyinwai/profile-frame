@@ -82,7 +82,8 @@ class MembersController < ApplicationController
       # user first log in
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
-        redirect_to :action => "new"
+        #redirect_to :action => "new"
+        render :template => "members/prompt"
       end
     end
     # if customer_id.blank?
