@@ -3,33 +3,38 @@ class MembersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  #session[:current_member_id] = ""
+  @@ajaxRendered = false
 
   # get member info from ajax
   def memberinfo
-    puts "reached memberinfo #{params[:customer_email]} #{params[:customer_id]}"
+    if @@ajaxRendered = false
+      puts "reached memberinfo #{params[:customer_email]} #{params[:customer_id]}"
 
-    if params[:customer_email].present?
-      if Member.exists?(:member_id => params[:customer_id])
-        # if member already been created, just redirect to index and render him out
-        puts "in member exist"
+      if params[:customer_email].present?
+        if Member.exists?(:member_id => params[:customer_id])
+          # if member already been created, just redirect to index and render him out
+          puts "in member exist"
 
-        session[:current_member_id] = params[:customer_id]
+          session[:current_member_id] = params[:customer_id]
 
-        redirect_to :action => "index", :customer_id => params[:customer_id] and return
-      else
-        # create member automatically when he logs in, insert 2 params first
-        puts "in member not exist"
+          redirect_to :action => "index", :customer_id => params[:customer_id] and return
+        else
+          # create member automatically when he logs in, insert 2 params first
+          puts "in member not exist"
 
-        @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
+          @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
-        session[:current_member_id] = params[:customer_id]
+          session[:current_member_id] = params[:customer_id]
 
-        redirect_to :action => "index", :customer_id => params[:customer_id] and return
+          redirect_to :action => "index", :customer_id => params[:customer_id] and return
+        end
       end
+      @@ajaxRendered = true
+      # render json reponse to ajax
+      render :json => {'member_email_result' => 'success'}
+    else
+      puts "ajax already rendered"
     end
-    # render json reponse to ajax
-    render :json => {'member_email_result' => 'success'}
   end
 
   # GET /members
