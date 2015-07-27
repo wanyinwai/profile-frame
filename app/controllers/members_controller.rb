@@ -7,9 +7,7 @@ class MembersController < ApplicationController
 
   # get member info from ajax
   def memberinfo
-    puts "reached memberinfo"
-    puts params[:customer_email]
-    puts params[:customer_id]
+    puts "reached memberinfo #{params[:customer_email]} #{params[:customer_id]}"
 
     if params[:customer_email].present?
       if Member.exists?(:member_id => params[:customer_id])
@@ -22,17 +20,14 @@ class MembersController < ApplicationController
       else
         # create member automatically when he logs in, insert 2 params first
         puts "came in not exist"
+
         @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
         session[:current_member_id] = params[:customer_id]
 
         redirect_to :action => "index", :customer_id => params[:customer_id] and return
       end
-
-      puts "after member exist if else"
     end
-
-    puts "after param exist if else"
     # render json reponse to ajax
     render :json => {'member_email_result' => 'success'}
   end
@@ -40,15 +35,16 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    puts "come in index"
-    puts "session #{session[:current_member_id]}"
+    puts "came in index"
 
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
-    puts "customer_id #{customer_id}"
-
+    puts "index customer_id #{customer_id}"
+    puts "index session #{session[:current_member_id]}"
+    
     if customer_id.blank?
-      puts "*****come in blank"
+      puts "*****customer_id blank"
+
       if session[:current_member_id].blank?
         puts "session empty"
         render :template => "members/login"
@@ -57,16 +53,13 @@ class MembersController < ApplicationController
         @members = Member.where(:member_id => session[:current_member_id])
       end
     else
-      puts "&&&&& #{customer_id}"
-      puts "&&&&&come in not blank"
+      puts "&&&&& not blank #{customer_id}"
 
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
         puts "member in blank"
         #@members = Member.all
       end
-
-      puts "member not blank"
     end
 
     puts "come out from index"
