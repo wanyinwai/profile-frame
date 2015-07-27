@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   @@ajaxRendered = false
-
+  puts "before memberinfo method : #{@@ajaxRendered}"
   # get member info from ajax
   def memberinfo
     if @@ajaxRendered = false
@@ -31,9 +31,8 @@ class MembersController < ApplicationController
       end
       @@ajaxRendered = true
       # render json reponse to ajax
-
     else
-      puts "ajax already rendered"
+      puts "ajax already rendered #{@@ajaxRendered}"
     end
     render :json => {'member_email_result' => 'success'}
   end
