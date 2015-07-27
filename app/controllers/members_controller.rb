@@ -56,6 +56,8 @@ class MembersController < ApplicationController
       puts "customer_id empty"
       if actionOrigin.blank?
         puts "render empty template"
+        reset_session
+        puts "removed session = #{session[:current_member_id]}"
         render :template => "members/login"
         # # if session empty means there's no input from ajax | user not login
         # if session[:current_member_id].blank?
