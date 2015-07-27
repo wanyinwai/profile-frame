@@ -12,14 +12,14 @@ class MembersController < ApplicationController
     if params[:customer_email].present?
       if Member.exists?(:member_id => params[:customer_id])
         # if member already been created, just redirect to index and render him out
-        puts "came in exist"
+        puts "in member exist"
 
         session[:current_member_id] = params[:customer_id]
 
         redirect_to :action => "index", :customer_id => params[:customer_id] and return
       else
         # create member automatically when he logs in, insert 2 params first
-        puts "came in not exist"
+        puts "in member not exist"
 
         @member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
@@ -35,32 +35,45 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    puts "came in index"
+    puts "hello i am in index"
+    # debug - can i know which controller action it came from?
+    # if i know it is from edit, then i can use session to check.
+    # if it is not from edit, then i can use customer_id.blank? to render empty
 
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
     puts "index customer_id #{customer_id}"
     puts "index session #{session[:current_member_id]}"
-    
-    if customer_id.blank?
-      puts "*****customer_id blank"
 
-      if session[:current_member_id].blank?
-        puts "session empty"
-        render :template => "members/login"
-      else
-        puts "session not empty"
-        @members = Member.where(:member_id => session[:current_member_id])
-      end
+    # if session empty means there's no input from ajax | user not login
+    if session[:current_member_id].blank?
+      puts "session empty"
+      # user not log in so render ask user login page
+      render :template => "members/login"
     else
-      puts "&&&&& not blank #{customer_id}"
-
-      @members = Member.where(:member_id => params[:customer_id])
-      if @members.blank?
-        puts "member in blank"
-        #@members = Member.all
-      end
+      puts "session exist"
+      # session not empty means input from ajax | user is logged in
+      # if user logged in, get session of the user and load his details
+      @members = Member.where(:member_id => session[:current_member_id])
     end
+
+    # if customer_id.blank?
+    #   puts "*****customer_id blank"
+    #   if session[:current_member_id].blank?
+    #     puts "session empty"
+    #     render :template => "members/login"
+    #   else
+    #     puts "session not empty"
+    #     @members = Member.where(:member_id => session[:current_member_id])
+    #   end
+    # else
+    #   puts "&&&&& not blank #{customer_id}"
+    #   @members = Member.where(:member_id => params[:customer_id])
+    #   if @members.blank?
+    #     puts "member in blank"
+    #     #@members = Member.all
+    #   end
+    # end
 
     puts "come out from index"
   end
