@@ -7,7 +7,7 @@ class MembersController < ApplicationController
   puts "before memberinfo method : #{@@ajaxRendered}"
   # get member info from ajax
   def memberinfo
-    if @@ajaxRendered = false
+    if @@ajaxRendered == false
       puts "reached memberinfo #{params[:customer_email]} #{params[:customer_id]}"
 
       if params[:customer_email].present?
