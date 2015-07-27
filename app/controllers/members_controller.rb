@@ -45,6 +45,10 @@ class MembersController < ApplicationController
     puts "index customer_id #{customer_id}"
     puts "index session #{session[:current_member_id]}"
 
+    # params from edit
+    actionOrigin = params[:fromOrigin]
+    puts "action origin = #{actionOrigin}"
+
     # if customer_id empty means either user is log out OR from 'edit' redirect
     # if customer_id empty, check whether session empty | for 'edit'
     # debug - if customer_id.blank && not from edit, empty session
