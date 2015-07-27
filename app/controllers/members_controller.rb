@@ -45,18 +45,28 @@ class MembersController < ApplicationController
     puts "index customer_id #{customer_id}"
     puts "index session #{session[:current_member_id]}"
 
-    # if session empty means there's no input from ajax | user not login
-    if session[:current_member_id].blank?
-      puts "session empty"
-      # user not log in so render ask user login page
-      render :template => "members/login"
+    # if customer_id empty means either user is log out OR from 'edit' redirect
+    # if customer_id empty, check whether session empty | for 'edit'
+    # debug - if customer_id.blank && not from edit, empty session
+    if customer_id.blank?
+      puts "customer_id empty"
+      # if session empty means there's no input from ajax | user not login
+      if session[:current_member_id].blank?
+        puts "session empty"
+        # user not log in so render ask user login page
+        render :template => "members/login"
+      else
+        puts "session exist"
+        # session not empty means input from ajax | user is logged in
+        # if user logged in, get session of the user and load his details
+        # session not empty is also used when user navigate back from other action
+        @members = Member.where(:member_id => session[:current_member_id])
+      end
     else
-      puts "session exist"
-      # session not empty means input from ajax | user is logged in
-      # if user logged in, get session of the user and load his details
-      @members = Member.where(:member_id => session[:current_member_id])
+      puts "customer_id not empty"
+      # user first log in
+      @members = Member.where(:member_id => params[:customer_id])
     end
-
     # if customer_id.blank?
     #   puts "*****customer_id blank"
     #   if session[:current_member_id].blank?
