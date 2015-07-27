@@ -76,6 +76,9 @@ class MembersController < ApplicationController
       puts "customer_id not empty"
       # user first log in
       @members = Member.where(:member_id => params[:customer_id])
+      if @members.blank?
+        puts "members object not found"
+      end
     end
     # if customer_id.blank?
     #   puts "*****customer_id blank"
