@@ -85,7 +85,7 @@ class MembersController < ApplicationController
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
         # record not found, is new member. Show prompt ask them create profile.
-        render :template => "members/prompt", :customer_id => customer_id, :customer_email => customer_email
+        render :template => "members/prompt", :locals => {:customer_id => customer_email, :customer_email => customer_id}
       end
     end
 
