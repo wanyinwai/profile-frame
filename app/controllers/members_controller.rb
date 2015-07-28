@@ -65,7 +65,7 @@ class MembersController < ApplicationController
     # debug - if customer_id.blank && not from edit, empty session
     if member_id.blank?
       puts "member_id empty"
-      if action_origin.blank?
+      if action_origin.blank? && create_origin.blank?
         puts "render empty template"
         reset_session
         puts "removed session = #{session[:current_member_id]}"
