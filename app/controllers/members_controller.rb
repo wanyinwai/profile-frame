@@ -84,11 +84,11 @@ class MembersController < ApplicationController
       # user first log in
       @members = Member.where(:member_id => params[:customer_id])
       if @members.blank?
-        #redirect_to :action => "new"
-        render :template => "members/prompt"
+        # record not found, is new member. Show prompt ask them create profile.
+        render :template => "members/prompt", :locals => {:customer_id => customer_id}
       end
     end
-    
+
     puts "come out from index"
   end
 
