@@ -17,7 +17,7 @@ class MembersController < ApplicationController
 
           session[:current_member_id] = params[:customer_id]
 
-          redirect_to :action => "index", :customer_id => params[:customer_id] and return
+          redirect_to :action => "index", :customer_id => params[:customer_id], :customer_email => params[:customer_email] and return
         else
           # create member automatically when he logs in, insert 2 params first
           puts "in member not exist"
@@ -26,7 +26,7 @@ class MembersController < ApplicationController
 
           session[:current_member_id] = params[:customer_id]
 
-          redirect_to :action => "index", :customer_id => params[:customer_id] and return
+          redirect_to :action => "index", :customer_id => params[:customer_id], :customer_email => params[:customer_email] and return
         end
       end
       @@ajaxRendered = true
@@ -47,7 +47,9 @@ class MembersController < ApplicationController
 
     # receive param from memberinfo redirect, then render user
     customer_id = params[:customer_id]
-    puts "index customer_id #{customer_id}"
+    customer_email = params[:customer_email]
+
+    puts "index customer_id #{customer_id} customer email #{customer_email}"
     puts "index session #{session[:current_member_id]}"
 
     # params from edit
@@ -86,24 +88,7 @@ class MembersController < ApplicationController
         render :template => "members/prompt"
       end
     end
-    # if customer_id.blank?
-    #   puts "*****customer_id blank"
-    #   if session[:current_member_id].blank?
-    #     puts "session empty"
-    #     render :template => "members/login"
-    #   else
-    #     puts "session not empty"
-    #     @members = Member.where(:member_id => session[:current_member_id])
-    #   end
-    # else
-    #   puts "&&&&& not blank #{customer_id}"
-    #   @members = Member.where(:member_id => params[:customer_id])
-    #   if @members.blank?
-    #     puts "member in blank"
-    #     #@members = Member.all
-    #   end
-    # end
-
+    
     puts "come out from index"
   end
 
