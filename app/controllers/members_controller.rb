@@ -46,22 +46,22 @@ class MembersController < ApplicationController
     # if it is not from edit, then i can use customer_id.blank? to render empty
 
     # receive param from memberinfo redirect, then render user
-    customer_id = params[:customer_id]
-    customer_email = params[:customer_email]
+    member_id = params[:customer_id]
+    member_email = params[:customer_email]
 
-    puts "index customer_id #{customer_id} customer email #{customer_email}"
+    puts "index customer_id #{member_id} customer email #{member_email}"
     puts "index session #{session[:current_member_id]}"
 
     # params from edit
-    actionOrigin = params[:fromOrigin]
-    puts "action origin = #{actionOrigin}"
+    action_origin = params[:fromOrigin]
+    puts "action origin = #{action_origin}"
 
     # if customer_id empty means either user is log out OR from 'edit' redirect
     # if customer_id empty, check whether session empty | for 'edit'
     # debug - if customer_id.blank && not from edit, empty session
-    if customer_id.blank?
-      puts "customer_id empty"
-      if actionOrigin.blank?
+    if member_id.blank?
+      puts "member_id empty"
+      if action_origin.blank?
         puts "render empty template"
         reset_session
         puts "removed session = #{session[:current_member_id]}"
@@ -73,7 +73,7 @@ class MembersController < ApplicationController
         #   render :template => "members/login"
       else
         puts "session exist"
-        puts "session exist = #{actionOrigin}"
+        puts "session exist = #{action_origin}"
         # session not empty means input from ajax | user is logged in
         # if user logged in, get session of the user and load his details
         # session not empty is also used when user navigate back from other action
@@ -82,10 +82,10 @@ class MembersController < ApplicationController
     else
       puts "customer_id not empty"
       # user first log in
-      @members = Member.where(:member_id => params[:customer_id])
+      @members = Member.where(:member_id => member_id)
       if @members.blank?
         # record not found, is new member. Show prompt ask them create profile.
-        render :template => "members/prompt", :locals => {:customer_id => customer_id, :customer_email => customer_email}
+        render :template => "members/prompt", :locals => {:member_id => member_id, :member_email => member_email}
       end
     end
 
@@ -100,6 +100,10 @@ class MembersController < ApplicationController
 
   # GET /members/new
   def new
+    # params from create link_to
+    @member_id = params[:member_id]
+    @member_email = params[:member_email]
+    puts "new #{@member_id} #{@member_email}"
     @member = Member.new
   end
 
