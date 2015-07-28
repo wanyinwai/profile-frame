@@ -122,7 +122,9 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        redirect_to :action => "index", :member_create_origin => "save" and return
+        #redirect_to :action => "index", :member_create_origin => "save" and return
+        format.html { redirect_to :action => "index", :member_create_origin => "save" and return }
+
         # format.html { redirect_to @member, notice: 'Member was successfully created.' }
         # format.json { render :show, status: :created, location: @member }
       else
