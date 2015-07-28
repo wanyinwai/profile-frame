@@ -56,6 +56,10 @@ class MembersController < ApplicationController
     action_origin = params[:fromOrigin]
     puts "action origin = #{action_origin}"
 
+    # params from create
+    create_origin = params[:member_create_origin]
+    puts "create_origin = #{create_origin}"
+
     # if customer_id empty means either user is log out OR from 'edit' redirect
     # if customer_id empty, check whether session empty | for 'edit'
     # debug - if customer_id.blank && not from edit, empty session
@@ -118,8 +122,9 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        format.html { redirect_to @member, notice: 'Member was successfully created.' }
-        format.json { render :show, status: :created, location: @member }
+        redirect_to :action => "index", :member_create_origin => "save" and return
+        # format.html { redirect_to @member, notice: 'Member was successfully created.' }
+        # format.json { render :show, status: :created, location: @member }
       else
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
