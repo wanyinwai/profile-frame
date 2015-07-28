@@ -55,17 +55,19 @@ class MembersController < ApplicationController
     # params from edit
     action_origin = params[:fromOrigin]
     puts "action origin = #{action_origin}"
-
     # params from create
     create_origin = params[:member_create_origin]
     puts "create_origin = #{create_origin}"
+    # params from update
+    update_origin = params[:member_update_origin]
+    puts "update_origin = #{update_origin}"
 
     # if customer_id empty means either user is log out OR from 'edit' redirect
     # if customer_id empty, check whether session empty | for 'edit'
     # debug - if customer_id.blank && not from edit, empty session
     if member_id.blank?
       puts "member_id empty"
-      if action_origin.blank? && create_origin.blank?
+      if action_origin.blank? && create_origin.blank? && update_origin.blank?
         puts "render empty template"
         reset_session
         puts "removed session = #{session[:current_member_id]}"
@@ -139,8 +141,8 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @member, notice: 'Member was successfully updated.' }
-        format.json { render :show, status: :ok, location: @member }
+        format.html { redirect_to :action => "index", :member_update_origin => "update" and return }
+        #format.json { render :show, status: :ok, location: @member }
       else
         format.html { render :edit }
         format.json { render json: @member.errors, status: :unprocessable_entity }
