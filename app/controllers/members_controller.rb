@@ -3,6 +3,9 @@ class MembersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+  # define member id as class variable to be able to access in model
+  cattr_accessor :member_id
+
   @@ajaxRendered = false
   puts "before memberinfo method : #{@@ajaxRendered}"
   # get member info from ajax
@@ -112,6 +115,9 @@ class MembersController < ApplicationController
     @member_email = params[:member_email]
     puts "new #{@member_id} #{@member_email}"
     @member = Member.new
+
+    # for model
+    @member.member_id = @member_id
   end
 
   # GET /members/1/edit
