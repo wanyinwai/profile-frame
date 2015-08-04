@@ -53,8 +53,8 @@ class MembersController < ApplicationController
     puts "index session #{session[:current_member_id]}"
 
     # params from edit
-    action_origin = params[:fromOrigin]
-    puts "action origin = #{action_origin}"
+    edit_origin = params[:member_edit_origin]
+    puts "edit_origin = #{edit_origin}"
     # params from create
     create_origin = params[:member_create_origin]
     puts "create_origin = #{create_origin}"
@@ -62,12 +62,12 @@ class MembersController < ApplicationController
     update_origin = params[:member_update_origin]
     puts "update_origin = #{update_origin}"
 
-    # if customer_id empty means either user is log out OR from 'edit' redirect
-    # if customer_id empty, check whether session empty | for 'edit'
-    # debug - if customer_id.blank && not from edit, empty session
+    # method checkes whether member is logged in
+    # if customer_id empty means either user is log out OR from "action" redirect
     if member_id.blank?
       puts "member_id empty"
-      if action_origin.blank? && create_origin.blank? && update_origin.blank?
+      if edit_origin.blank? && create_origin.blank? && update_origin.blank?
+        # here means member is NOT redirect from edit, create or update, so means logout
         puts "render empty template"
         reset_session
         puts "removed session = #{session[:current_member_id]}"
@@ -79,7 +79,7 @@ class MembersController < ApplicationController
         #   render :template => "members/login"
       else
         puts "session exist"
-        puts "session exist = #{action_origin}"
+        puts "session exist = #{edit_origin}"
         # session not empty means input from ajax | user is logged in
         # if user logged in, get session of the user and load his details
         # session not empty is also used when user navigate back from other action
@@ -91,6 +91,7 @@ class MembersController < ApplicationController
       @members = Member.where(:member_id => member_id)
       if @members.blank?
         # record not found, is new member. Show prompt ask them create profile.
+        # params will be pass to prompt view, then use by "Create" link
         render :template => "members/prompt", :locals => {:member_id => member_id, :member_email => member_email}
       end
     end
@@ -106,7 +107,7 @@ class MembersController < ApplicationController
 
   # GET /members/new
   def new
-    # params from create link_to
+    # params from "Create" in prompt view, will be pass to New view as default value
     @member_id = params[:member_id]
     @member_email = params[:member_email]
     puts "new #{@member_id} #{@member_email}"
