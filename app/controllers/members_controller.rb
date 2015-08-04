@@ -3,9 +3,6 @@ class MembersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  # define session variable
-  session[:current_member_id] = ""
-
   @@ajaxRendered = false
   puts "before memberinfo method : #{@@ajaxRendered}"
   # get member info from ajax
