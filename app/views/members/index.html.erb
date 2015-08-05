@@ -7,14 +7,6 @@
     </div>
     <div class="col-xs-8">
       <p>
-        <strong>Member Id:</strong>
-        <%= member.member_id %>
-      </p>
-      <p>
-        <strong>Email:</strong>
-        <%= member.email %>
-      </p>
-      <p>
         <strong>Birthday:</strong>
         <%= member.bday %>
       </p>
@@ -22,7 +14,7 @@
         <strong>Occupation:</strong>
         <%= member.occupation %>
       </p>
-      <%= link_to 'Edit', edit_member_path(member), class: "btn btn-primary" %>
+      <%= link_to 'Edit', edit_member_path(member), class: "btn btn-default" %>
     </div>
   <% end %>
 </div>
