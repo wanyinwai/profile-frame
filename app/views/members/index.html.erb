@@ -8,7 +8,11 @@
     <div class="col-xs-8">
       <p>
         <strong>Birthday:</strong>
-        <%= member.bday.strftime('%-d %B %Y') %>
+        <% if member.bday.blank? %>
+          <%= member.bday %>
+        <% else %>
+          <%= member.bday.strftime('%-d %B %Y') %>
+        <% end %>
       </p>
       <p>
         <strong>Occupation:</strong>
