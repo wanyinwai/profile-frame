@@ -9,13 +9,15 @@ class MembersController < ApplicationController
   def memberinfo
     if @@ajaxRendered == false
       puts "reached memberinfo #{params[:customer_email]} #{params[:customer_id]}"
+      # set session here
+      session[:current_member_id] = params[:customer_id]
 
       if params[:customer_email].present?
         if Member.exists?(:member_id => params[:customer_id])
           # if member already been created, just redirect to index and render him out
           puts "in member exist"
 
-          session[:current_member_id] = params[:customer_id]
+          #session[:current_member_id] = params[:customer_id]
 
           redirect_to :action => "index", :customer_id => params[:customer_id], :customer_email => params[:customer_email] and return
         else
@@ -24,7 +26,7 @@ class MembersController < ApplicationController
 
           #@member = Member.create(:member_id =>params[:customer_id], :email => params[:customer_email])
 
-          session[:current_member_id] = params[:customer_id]
+          #session[:current_member_id] = params[:customer_id]
 
           redirect_to :action => "index", :customer_id => params[:customer_id], :customer_email => params[:customer_email] and return
         end
