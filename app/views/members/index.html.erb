@@ -27,6 +27,7 @@
         <%= member.occupation %>
       </p>
       <%= link_to 'Edit', edit_member_path(member), class: "btn btn-default" %>
+      <%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %>
     </div>
   <% end %>
 </div>
